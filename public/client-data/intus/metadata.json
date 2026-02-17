@@ -168,11 +168,12 @@
     },
     {
       "id": "gate-tracker",
-      "type": "department",
+      "type": "quality-gate",
       "title": "Intus Launch Kit — Gate Tracker",
+      "gateNumber": 6,
       "dateGenerated": "2026-02-17",
       "status": "completed",
-      "order": 50,
+      "order": 100,
       "estimatedReadTime": 14
     }
   ]

@@ -25,7 +25,7 @@ export function ProgressTracker({ deliverables }: { deliverables: DeliverableMet
       </div>
 
       <div className="grid grid-cols-3 gap-4 text-center">
-        <Stat label="Departments" count={departments.length} completed={departments.filter(d => d.status === 'completed').length} />
+        <Stat label="Deliverables" count={departments.length} completed={departments.filter(d => d.status === 'completed').length} />
         <Stat label="Quality Gates" count={gates.length} completed={gates.filter(d => d.status === 'completed').length} />
         <Stat label="Final Summary" count={finals.length} completed={finals.filter(d => d.status === 'completed').length} />
       </div>

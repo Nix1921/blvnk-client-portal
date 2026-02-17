@@ -37,7 +37,7 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
 
         {/* Department Reports */}
         {departments.length > 0 && (
-          <Section title="Department Reports">
+          <Section title="Deliverables">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {departments.map(d => (
                 <DeliverableCard key={d.id} deliverable={d} clientSlug={client.clientId} />

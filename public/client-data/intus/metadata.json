@@ -1,0 +1,179 @@
+{
+  "clientId": "intus",
+  "clientName": "Intus",
+  "packageType": "launch-kit",
+  "packagePrice": "$12,000",
+  "dateCompleted": "2026-02-17",
+  "password": "intus2026",
+  "deliverables": [
+    {
+      "id": "01-market-intelligence-report",
+      "type": "department",
+      "title": "Market Intelligence Report — Intus",
+      "departmentNumber": 1,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 1,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "02-competitive-dynamics-report",
+      "type": "department",
+      "title": "Competitive Dynamics Model & Strategy — Intus",
+      "departmentNumber": 2,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 2,
+      "estimatedReadTime": 9
+    },
+    {
+      "id": "03-strategic-positioning-brief",
+      "type": "department",
+      "title": "Strategic Positioning Brief & Category Blueprint — Intus",
+      "departmentNumber": 3,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 3,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "04-brand-archetype-guide",
+      "type": "department",
+      "title": "Brand Archetype Guide — Intus",
+      "departmentNumber": 4,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 4,
+      "estimatedReadTime": 8
+    },
+    {
+      "id": "05-brandscript-and-manifesto",
+      "type": "department",
+      "title": "BrandScript & Brand Manifesto — Intus",
+      "departmentNumber": 5,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 5,
+      "estimatedReadTime": 6
+    },
+    {
+      "id": "06-tone-of-voice-guide",
+      "type": "department",
+      "title": "Tone of Voice Guide, Word Bank & Copy Deck — Intus",
+      "departmentNumber": 6,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 6,
+      "estimatedReadTime": 9
+    },
+    {
+      "id": "07-brand-identity-system",
+      "type": "department",
+      "title": "Brand Identity System — Intus",
+      "departmentNumber": 7,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 7,
+      "estimatedReadTime": 8
+    },
+    {
+      "id": "08-design-system",
+      "type": "department",
+      "title": "Design System — Intus",
+      "departmentNumber": 8,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 8,
+      "estimatedReadTime": 7
+    },
+    {
+      "id": "09-semiotic-dictionary",
+      "type": "department",
+      "title": "Semiotic Dictionary — Intus",
+      "departmentNumber": 9,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 9,
+      "estimatedReadTime": 7
+    },
+    {
+      "id": "10-website-ux-wireframes",
+      "type": "department",
+      "title": "Website UX Wireframes & Digital Architecture — Intus",
+      "departmentNumber": 10,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 10,
+      "estimatedReadTime": 10
+    },
+    {
+      "id": "11-content-strategy-channel-plan",
+      "type": "department",
+      "title": "Content Strategy & Channel Plan — Intus",
+      "departmentNumber": 11,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 11,
+      "estimatedReadTime": 6
+    },
+    {
+      "id": "12-email-lifecycle-system",
+      "type": "department",
+      "title": "Email Lifecycle System — Intus",
+      "departmentNumber": 12,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 12,
+      "estimatedReadTime": 5
+    },
+    {
+      "id": "13-ad-creative-testing-framework",
+      "type": "department",
+      "title": "Ad Creative Testing Framework — Intus",
+      "departmentNumber": 13,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 13,
+      "estimatedReadTime": 5
+    },
+    {
+      "id": "14-lightning-strike-execution-plan",
+      "type": "department",
+      "title": "Lightning Strike Execution Plan — Intus",
+      "departmentNumber": 14,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 14,
+      "estimatedReadTime": 7
+    },
+    {
+      "id": "15-measurement-framework",
+      "type": "department",
+      "title": "Measurement Framework & Dashboards — Intus",
+      "departmentNumber": 15,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 15,
+      "estimatedReadTime": 6
+    },
+    {
+      "id": "16-ninety-day-roadmap",
+      "type": "department",
+      "title": "90-Day Post-Launch Roadmap — Intus",
+      "departmentNumber": 16,
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 16,
+      "estimatedReadTime": 5
+    },
+    {
+      "id": "gate-tracker",
+      "type": "department",
+      "title": "Intus Launch Kit — Gate Tracker",
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 50,
+      "estimatedReadTime": 14
+    }
+  ]
+}

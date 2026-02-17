@@ -1,0 +1,129 @@
+{
+  "clientId": "blvnk-canvas",
+  "clientName": "Blvnk Canvas",
+  "packageType": "launch-kit",
+  "packagePrice": "$12,000",
+  "dateCompleted": "2026-02-16",
+  "password": "canvas2026",
+  "deliverables": [
+    {
+      "id": "01-market-intelligence-report",
+      "type": "department",
+      "title": "BLVNK Canvas — Market Intelligence Report",
+      "departmentNumber": 1,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 1,
+      "estimatedReadTime": 10
+    },
+    {
+      "id": "02-competitive-dynamics-report",
+      "type": "department",
+      "title": "BLVNK Canvas — Competitive Dynamics Report",
+      "departmentNumber": 2,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 2,
+      "estimatedReadTime": 15
+    },
+    {
+      "id": "03-strategy-psychology-report",
+      "type": "department",
+      "title": "BLVNK Canvas — Strategy & Psychology Lab Report",
+      "departmentNumber": 3,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 3,
+      "estimatedReadTime": 18
+    },
+    {
+      "id": "04-narrative-verbal-identity",
+      "type": "department",
+      "title": "BLVNK Canvas — Narrative & Verbal Identity Report",
+      "departmentNumber": 4,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 4,
+      "estimatedReadTime": 17
+    },
+    {
+      "id": "05-creative-visual-direction",
+      "type": "department",
+      "title": "BLVNK Canvas — Creative & Visual Arts Studio Report",
+      "departmentNumber": 5,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 5,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "06-digital-architecture-blueprint",
+      "type": "department",
+      "title": "BLVNK Canvas — Digital & Systems Architecture Blueprint",
+      "departmentNumber": 6,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 6,
+      "estimatedReadTime": 13
+    },
+    {
+      "id": "07-distribution-growth-strategy",
+      "type": "department",
+      "title": "BLVNK Canvas — Distribution & Growth Engine Strategy",
+      "departmentNumber": 7,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 7,
+      "estimatedReadTime": 13
+    },
+    {
+      "id": "quality-gate-1-review",
+      "type": "quality-gate",
+      "title": "Quality Gate 1 — Intelligence Phase Review",
+      "gateNumber": 1,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 101,
+      "estimatedReadTime": 3
+    },
+    {
+      "id": "quality-gate-2-review",
+      "type": "quality-gate",
+      "title": "Quality Gate 2 — Strategy Phase Review",
+      "gateNumber": 2,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 102,
+      "estimatedReadTime": 3
+    },
+    {
+      "id": "quality-gate-3-review",
+      "type": "quality-gate",
+      "title": "Quality Gate 3 — Identity Phase Review",
+      "gateNumber": 3,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 103,
+      "estimatedReadTime": 4
+    },
+    {
+      "id": "quality-gate-4-review",
+      "type": "quality-gate",
+      "title": "Quality Gate 4 — Digital & Distribution Review",
+      "gateNumber": 4,
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 104,
+      "estimatedReadTime": 4
+    },
+    {
+      "id": "launch-kit-final",
+      "type": "final-summary",
+      "title": "BLVNK Canvas — Brand Intelligence System",
+      "dateGenerated": "2026-02-16",
+      "status": "completed",
+      "order": 200,
+      "estimatedReadTime": 11
+    }
+  ]
+}

@@ -175,6 +175,15 @@
       "status": "completed",
       "order": 100,
       "estimatedReadTime": 14
+    },
+    {
+      "id": "executive-summary",
+      "type": "final-summary",
+      "title": "Intus — Launch Kit Executive Summary",
+      "dateGenerated": "2026-02-17",
+      "status": "completed",
+      "order": 200,
+      "estimatedReadTime": 12
     }
   ]
 }

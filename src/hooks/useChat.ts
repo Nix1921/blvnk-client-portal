@@ -144,11 +144,12 @@ export function useChat(clientSlug: string): UseChatResult {
       // 2. Search for relevant deliverables
       const relevant = searchDeliverables(allDeliverables, message, 5)
 
-      // 3. Build context string from relevant deliverables (truncate to stay within limits)
+      // 3. Build context string from relevant deliverables (keep compact)
       const context = relevant
+        .slice(0, 3) // Max 3 deliverables to keep payload small
         .map(d => {
-          const markdown = d.rawMarkdown.length > 4000
-            ? d.rawMarkdown.slice(0, 4000) + '\n\n[... truncated]'
+          const markdown = d.rawMarkdown.length > 3000
+            ? d.rawMarkdown.slice(0, 3000) + '\n\n[... truncated]'
             : d.rawMarkdown
           return `--- ${d.metadata.title} ---\n${markdown}`
         })

@@ -37,9 +37,10 @@ export function ChatPanel({ clientSlug, clientName }: ChatPanelProps) {
 
   return (
     <div
-      className={`fixed bottom-6 right-6 z-50 glass-panel rounded-xl shadow-2xl flex flex-col transition-all ${
+      className={`fixed bottom-6 right-6 z-50 rounded-xl shadow-2xl flex flex-col transition-all border border-white/10 ${
         isMinimized ? 'w-80 h-16' : 'w-[480px] h-[600px]'
       }`}
+      style={{ background: 'rgba(10, 12, 18, 0.95)', backdropFilter: 'blur(20px)' }}
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">

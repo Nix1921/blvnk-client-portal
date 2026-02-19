@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #00d9ff;
-  --color-primary-dim: #00d9ff33;
+  --color-primary: #3B82F6;
+  --color-primary-dim: #3B82F633;
   --color-background-dark: #0a0a0a;
   --color-surface-dark: #121212;
   --color-surface-light: #1a1a1a;
@@ -31,8 +31,8 @@
   }
 
   ::selection {
-    background-color: #00d9ff;
-    color: #000;
+    background-color: #3B82F6;
+    color: #0A0A0F;
   }
 
   ::-webkit-scrollbar {

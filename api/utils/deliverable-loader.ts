@@ -13,15 +13,33 @@ export interface DeliverableContent {
  */
 export async function loadDeliverables(clientSlug: string): Promise<DeliverableContent[]> {
   // For serverless deployment, deliverables need to be in the deployment bundle
-  // Path: /var/task/deliverables/{clientSlug}/ (Vercel serverless)
-  // OR: relative to API endpoint during development
+  // Try multiple possible paths for different environments
 
-  const deliverablesPath = path.join(process.cwd(), 'deliverables', clientSlug);
+  const possiblePaths = [
+    path.join(process.cwd(), 'deliverables', clientSlug),           // Standard
+    path.join(__dirname, '..', '..', 'deliverables', clientSlug),  // Relative to API
+    path.join('/var/task', 'deliverables', clientSlug),            // Vercel Lambda
+  ];
+
+  console.log(`[Deliverable Loader] process.cwd(): ${process.cwd()}`);
+  console.log(`[Deliverable Loader] __dirname: ${__dirname}`);
+  console.log(`[Deliverable Loader] Trying paths:`, possiblePaths);
+
+  let deliverablesPath = '';
 
   try {
-    // Check if deliverables directory exists
-    if (!fs.existsSync(deliverablesPath)) {
-      console.warn(`[Deliverable Loader] No deliverables found at: ${deliverablesPath}`);
+    // Find first path that exists
+    for (const tryPath of possiblePaths) {
+      if (fs.existsSync(tryPath)) {
+        deliverablesPath = tryPath;
+        console.log(`[Deliverable Loader] Found deliverables at: ${deliverablesPath}`);
+        break;
+      }
+    }
+
+    // Check if we found a valid path
+    if (!deliverablesPath) {
+      console.error(`[Deliverable Loader] No deliverables found in any of:`, possiblePaths);
       return [];
     }
 

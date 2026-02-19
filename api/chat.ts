@@ -1,9 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import Anthropic from '@anthropic-ai/sdk';
-
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
-});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
@@ -15,6 +10,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!message) {
       return res.status(400).json({ error: 'Missing required field: message' });
+    }
+
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return res.status(500).json({ error: 'ANTHROPIC_API_KEY not configured' });
     }
 
     const systemPrompt = `You are a brand strategy expert embedded in a client portal. You help clients understand their brand strategy deliverables.
@@ -31,17 +30,35 @@ RULES:
 
     const messages = [
       ...(history || []),
-      { role: 'user' as const, content: message },
+      { role: 'user', content: message },
     ];
 
-    const response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-5-20250929',
-      max_tokens: 2048,
-      system: systemPrompt,
-      messages,
+    const apiResponse = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-5-20250929',
+        max_tokens: 2048,
+        system: systemPrompt,
+        messages,
+      }),
     });
 
-    const answer = response.content[0].type === 'text' ? response.content[0].text : '';
+    if (!apiResponse.ok) {
+      const errorText = await apiResponse.text();
+      console.error('[Chat API] Anthropic error:', apiResponse.status, errorText);
+      return res.status(502).json({
+        error: 'Claude API error',
+        details: `Status ${apiResponse.status}`,
+      });
+    }
+
+    const data = await apiResponse.json() as { content?: Array<{ type: string; text?: string }> };
+    const answer = data.content?.[0]?.type === 'text' ? data.content[0].text ?? '' : '';
 
     return res.status(200).json({ answer });
   } catch (error) {

@@ -166,8 +166,14 @@ export function useChat(clientSlug: string): UseChatResult {
       })
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to get response')
+        let errorMsg = 'Failed to get response'
+        try {
+          const errorData = await response.json()
+          errorMsg = errorData.error || errorMsg
+        } catch {
+          errorMsg = `Server error (${response.status})`
+        }
+        throw new Error(errorMsg)
       }
 
       const data = await response.json()

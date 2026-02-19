@@ -31,3 +31,21 @@ export interface TOCEntry {
   level: number
   children: TOCEntry[]
 }
+
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'assistant'
+  content: string
+  sources?: ChatSource[]
+  timestamp: number
+}
+
+export interface ChatSource {
+  deliverableId: string
+  title: string
+}
+
+export interface ChatSession {
+  sessionId: string
+  messages: ChatMessage[]
+}

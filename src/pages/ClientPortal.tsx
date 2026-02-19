@@ -5,6 +5,7 @@ import { Navbar } from '../components/layout/Navbar.tsx'
 import { Footer } from '../components/layout/Footer.tsx'
 import { PasswordGate } from '../components/auth/PasswordGate.tsx'
 import { Dashboard } from '../components/dashboard/Dashboard.tsx'
+import { ChatPanel } from '../components/chat/ChatPanel.tsx'
 
 export function ClientPortal() {
   const { clientSlug } = useParams<{ clientSlug: string }>()
@@ -49,6 +50,7 @@ export function ClientPortal() {
       <Navbar client={metadata} onLogout={metadata.password ? logout : undefined} />
       <Dashboard client={metadata} />
       <Footer />
+      <ChatPanel clientSlug={clientSlug ?? ''} clientName={metadata.clientName} />
     </div>
   )
 }

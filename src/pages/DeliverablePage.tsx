@@ -8,6 +8,7 @@ import { Footer } from '../components/layout/Footer.tsx'
 import { PasswordGate } from '../components/auth/PasswordGate.tsx'
 import { MarkdownRenderer } from '../components/deliverables/MarkdownRenderer.tsx'
 import { TableOfContents } from '../components/deliverables/TableOfContents.tsx'
+import { ChatPanel } from '../components/chat/ChatPanel.tsx'
 
 export function DeliverablePage() {
   const { clientSlug, deliverableId } = useParams<{ clientSlug: string; deliverableId: string }>()
@@ -129,6 +130,9 @@ export function DeliverablePage() {
 
         <Footer />
       </div>
+
+      {/* Chat Panel */}
+      <ChatPanel clientSlug={clientSlug ?? ''} clientName={metadata.clientName} />
     </div>
   )
 }

@@ -1,5 +1,4 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import deliverablesBundle from '../deliverables-bundle.json';
 
 export interface DeliverableContent {
   id: string;
@@ -9,63 +8,13 @@ export interface DeliverableContent {
 
 /**
  * Load deliverable markdown files for a client
- * Used to build context for Claude API queries
+ * Loads from pre-bundled JSON (created at build time)
  */
 export async function loadDeliverables(clientSlug: string): Promise<DeliverableContent[]> {
-  // For serverless deployment, deliverables need to be in the deployment bundle
-  // Try multiple possible paths for different environments
-
-  const possiblePaths = [
-    path.join(process.cwd(), 'deliverables', clientSlug),           // Standard
-    path.join(__dirname, '..', '..', 'deliverables', clientSlug),  // Relative to API
-    path.join('/var/task', 'deliverables', clientSlug),            // Vercel Lambda
-  ];
-
-  console.log(`[Deliverable Loader] process.cwd(): ${process.cwd()}`);
-  console.log(`[Deliverable Loader] __dirname: ${__dirname}`);
-  console.log(`[Deliverable Loader] Trying paths:`, possiblePaths);
-
-  let deliverablesPath = '';
-
   try {
-    // Find first path that exists
-    for (const tryPath of possiblePaths) {
-      if (fs.existsSync(tryPath)) {
-        deliverablesPath = tryPath;
-        console.log(`[Deliverable Loader] Found deliverables at: ${deliverablesPath}`);
-        break;
-      }
-    }
-
-    // Check if we found a valid path
-    if (!deliverablesPath) {
-      console.error(`[Deliverable Loader] No deliverables found in any of:`, possiblePaths);
-      return [];
-    }
-
-    const deliverables: DeliverableContent[] = [];
-
-    // Read all markdown files
-    const files = fs.readdirSync(deliverablesPath, { recursive: true }) as string[];
-    const mdFiles = files.filter(file => file.endsWith('.md'));
-
-    for (const file of mdFiles) {
-      const filePath = path.join(deliverablesPath, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
-
-      // Extract ID from filename
-      const id = path.basename(file, '.md');
-
-      // Extract title from first heading
-      const titleMatch = content.match(/^#\s+(.+)$/m);
-      const title = titleMatch ? titleMatch[1] : id;
-
-      deliverables.push({ id, title, content });
-    }
-
-    console.log(`[Deliverable Loader] Loaded ${deliverables.length} deliverables for ${clientSlug}`);
+    const deliverables = (deliverablesBundle as Record<string, DeliverableContent[]>)[clientSlug] || [];
+    console.log(`[Deliverable Loader] Loaded ${deliverables.length} deliverables for ${clientSlug} from bundle`);
     return deliverables;
-
   } catch (error) {
     console.error(`[Deliverable Loader] Error loading deliverables:`, error);
     return [];

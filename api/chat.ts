@@ -1,107 +1,54 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { loadDeliverables, searchDeliverables } from './utils/deliverable-loader';
-import { queryWithDeliverables } from './utils/claude';
-import { extractSources } from './utils/source-parser';
+import Anthropic from '@anthropic-ai/sdk';
 
-// In-memory session storage (for serverless, use Vercel KV or Redis in production)
-const sessions = new Map<string, Array<{ role: 'user' | 'assistant'; content: string }>>();
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { clientSlug, message, sessionId } = req.body;
+    const { message, context, history } = req.body;
 
-    // Validate required fields
-    if (!clientSlug || !message) {
-      return res.status(400).json({ error: 'Missing required fields: clientSlug, message' });
+    if (!message) {
+      return res.status(400).json({ error: 'Missing required field: message' });
     }
 
-    // TODO: Add authentication check
-    // Verify the user has access to this client's data
-    // For now, we'll skip this since auth is client-side via sessionStorage
+    const systemPrompt = `You are a brand strategy expert embedded in a client portal. You help clients understand their brand strategy deliverables.
 
-    console.log(`[Chat API] Query for client: ${clientSlug}`);
-    console.log(`[Chat API] Message: "${message}"`);
+Your knowledge comes from the following deliverables:
 
-    // Step 1: Load all deliverables for this client
-    const allDeliverables = await loadDeliverables(clientSlug);
+${context || 'No deliverables provided.'}
 
-    if (allDeliverables.length === 0) {
-      return res.status(404).json({
-        error: 'No deliverables found for this client',
-        details: `Client slug: ${clientSlug}`
-      });
-    }
+RULES:
+- Answer based on the deliverables above. If the question is about general marketing frameworks (e.g. "What are Jungian archetypes?"), you may use your general knowledge but always connect it back to the client's strategy.
+- When referencing a deliverable, mention its title naturally (e.g. "According to the Brand Archetype Guide...").
+- Be concise but thorough. Use markdown formatting.
+- If you genuinely don't know, say so — don't fabricate information.`;
 
-    // Step 2: Search for relevant deliverables based on the query
-    const relevantDeliverables = searchDeliverables(allDeliverables, message, 5);
+    const messages = [
+      ...(history || []),
+      { role: 'user' as const, content: message },
+    ];
 
-    console.log(`[Chat API] Found ${relevantDeliverables.length} relevant deliverables`);
-
-    // Step 3: Get or create conversation history
-    const newSessionId = sessionId || generateSessionId();
-    const conversationHistory = sessions.get(newSessionId) || [];
-
-    // Step 4: Query Claude with deliverables as context
-    const claudeResult = await queryWithDeliverables(
-      message,
-      relevantDeliverables,
-      conversationHistory
-    );
-
-    if (!claudeResult.success) {
-      return res.status(500).json({
-        error: 'Claude API query failed',
-        details: claudeResult.error
-      });
-    }
-
-    const answer = claudeResult.data!.answer;
-
-    // Step 5: Update conversation history
-    conversationHistory.push(
-      { role: 'user', content: message },
-      { role: 'assistant', content: answer }
-    );
-    sessions.set(newSessionId, conversationHistory);
-
-    // Clean up old sessions (keep last 100)
-    if (sessions.size > 100) {
-      const oldestKey = sessions.keys().next().value;
-      if (oldestKey) {
-        sessions.delete(oldestKey);
-      }
-    }
-
-    // Step 6: Extract source citations from the answer
-    const sources = extractSources(answer, clientSlug);
-
-    // Step 7: Return response
-    return res.status(200).json({
-      answer,
-      sources,
-      sessionId: newSessionId,
-      conversationLength: conversationHistory.length / 2,
+    const response = await anthropic.messages.create({
+      model: 'claude-sonnet-4-5-20250929',
+      max_tokens: 2048,
+      system: systemPrompt,
+      messages,
     });
 
+    const answer = response.content[0].type === 'text' ? response.content[0].text : '';
+
+    return res.status(200).json({ answer });
   } catch (error) {
     console.error('[Chat API] Error:', error);
-    console.error('[Chat API] Stack:', error instanceof Error ? error.stack : 'No stack trace');
     return res.status(500).json({
       error: 'Internal server error',
       details: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined
     });
   }
-}
-
-/**
- * Generate a unique session ID
- */
-function generateSessionId(): string {
-  return `session_${Date.now()}_${Math.random().toString(36).substring(7)}`;
 }

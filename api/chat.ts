@@ -72,7 +72,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Clean up old sessions (keep last 100)
     if (sessions.size > 100) {
       const oldestKey = sessions.keys().next().value;
-      sessions.delete(oldestKey);
+      if (oldestKey) {
+        sessions.delete(oldestKey);
+      }
     }
 
     // Step 6: Extract source citations from the answer

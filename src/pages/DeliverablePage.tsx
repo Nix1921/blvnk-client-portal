@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useClientData, useDeliverable } from '../hooks/useClientData.ts'
 import { useAuth } from '../hooks/useAuth.ts'
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth.ts'
 import { Navbar } from '../components/layout/Navbar.tsx'
 import { Sidebar } from '../components/layout/Sidebar.tsx'
 import { Footer } from '../components/layout/Footer.tsx'
 import { PasswordGate } from '../components/auth/PasswordGate.tsx'
+import { SupabaseAuthGate } from '../components/auth/SupabaseAuthGate.tsx'
 import { MarkdownRenderer } from '../components/deliverables/MarkdownRenderer.tsx'
 import { TableOfContents } from '../components/deliverables/TableOfContents.tsx'
 import { ChatPanel } from '../components/chat/ChatPanel.tsx'
@@ -14,10 +16,21 @@ export function DeliverablePage() {
   const { clientSlug, deliverableId } = useParams<{ clientSlug: string; deliverableId: string }>()
   const { metadata, loading: metaLoading } = useClientData(clientSlug ?? '')
   const { deliverable, loading: delLoading, error } = useDeliverable(clientSlug ?? '', deliverableId ?? '')
-  const { isAuthenticated, authenticate, logout } = useAuth(clientSlug ?? '')
+  const { isAuthenticated: isPasswordAuth, authenticate, logout: passwordLogout } = useAuth(clientSlug ?? '')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  if (metaLoading || delLoading) {
+  const authMethod = metadata?.authMethod ?? 'password'
+  const {
+    isAuthenticated: isSupabaseAuth,
+    loading: supabaseLoading,
+    unauthorized,
+    userEmail,
+    signInWithMagicLink,
+    signInWithGoogle,
+    signOut,
+  } = useSupabaseAuth(authMethod === 'supabase' ? metadata?.allowedEmails : undefined)
+
+  if (metaLoading || delLoading || (authMethod === 'supabase' && supabaseLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background-dark">
         <div className="text-center">
@@ -30,7 +43,8 @@ export function DeliverablePage() {
 
   if (!metadata) return null
 
-  if (metadata.password && !isAuthenticated) {
+  // Password auth gate
+  if (authMethod === 'password' && metadata.password && !isPasswordAuth) {
     return (
       <PasswordGate
         clientName={metadata.clientName}
@@ -39,10 +53,22 @@ export function DeliverablePage() {
     )
   }
 
+  // Supabase auth gate
+  if (authMethod === 'supabase' && (!isSupabaseAuth || unauthorized)) {
+    return (
+      <SupabaseAuthGate
+        clientName={metadata.clientName}
+        unauthorizedEmail={unauthorized ? userEmail : null}
+        onMagicLink={signInWithMagicLink}
+        onGoogle={signInWithGoogle}
+      />
+    )
+  }
+
   if (error || !deliverable) {
     return (
       <div className="min-h-screen bg-background-dark">
-        <Navbar client={metadata} onLogout={metadata.password ? logout : undefined} />
+        <Navbar client={metadata} onLogout={authMethod === 'supabase' ? signOut : (metadata.password ? passwordLogout : undefined)} />
         <div className="pt-16 flex items-center justify-center min-h-[60vh]">
           <div className="glass-panel rounded-xl p-8 text-center max-w-md">
             <h1 className="text-xl font-bold text-white mb-2">Deliverable Not Found</h1>
@@ -64,7 +90,7 @@ export function DeliverablePage() {
 
   return (
     <div className="min-h-screen bg-background-dark">
-      <Navbar client={metadata} onLogout={metadata.password ? logout : undefined} />
+      <Navbar client={metadata} onLogout={authMethod === 'supabase' ? signOut : (metadata.password ? passwordLogout : undefined)} />
 
       <Sidebar
         deliverables={metadata.deliverables}

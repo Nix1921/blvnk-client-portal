@@ -1,18 +1,31 @@
 import { useParams } from 'react-router-dom'
 import { useClientData } from '../hooks/useClientData.ts'
 import { useAuth } from '../hooks/useAuth.ts'
+import { useSupabaseAuth } from '../hooks/useSupabaseAuth.ts'
 import { Navbar } from '../components/layout/Navbar.tsx'
 import { Footer } from '../components/layout/Footer.tsx'
 import { PasswordGate } from '../components/auth/PasswordGate.tsx'
+import { SupabaseAuthGate } from '../components/auth/SupabaseAuthGate.tsx'
 import { Dashboard } from '../components/dashboard/Dashboard.tsx'
 import { ChatPanel } from '../components/chat/ChatPanel.tsx'
 
 export function ClientPortal() {
   const { clientSlug } = useParams<{ clientSlug: string }>()
   const { metadata, loading, error } = useClientData(clientSlug ?? '')
-  const { isAuthenticated, authenticate, logout } = useAuth(clientSlug ?? '')
+  const { isAuthenticated: isPasswordAuth, authenticate, logout: passwordLogout } = useAuth(clientSlug ?? '')
 
-  if (loading) {
+  const authMethod = metadata?.authMethod ?? 'password'
+  const {
+    isAuthenticated: isSupabaseAuth,
+    loading: supabaseLoading,
+    unauthorized,
+    userEmail,
+    signInWithMagicLink,
+    signInWithGoogle,
+    signOut,
+  } = useSupabaseAuth(authMethod === 'supabase' ? metadata?.allowedEmails : undefined)
+
+  if (loading || (authMethod === 'supabase' && supabaseLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background-dark">
         <div className="text-center">
@@ -36,7 +49,8 @@ export function ClientPortal() {
     )
   }
 
-  if (metadata.password && !isAuthenticated) {
+  // Password auth gate
+  if (authMethod === 'password' && metadata.password && !isPasswordAuth) {
     return (
       <PasswordGate
         clientName={metadata.clientName}
@@ -45,9 +59,23 @@ export function ClientPortal() {
     )
   }
 
+  // Supabase auth gate
+  if (authMethod === 'supabase' && (!isSupabaseAuth || unauthorized)) {
+    return (
+      <SupabaseAuthGate
+        clientName={metadata.clientName}
+        unauthorizedEmail={unauthorized ? userEmail : null}
+        onMagicLink={signInWithMagicLink}
+        onGoogle={signInWithGoogle}
+      />
+    )
+  }
+
+  const handleLogout = authMethod === 'supabase' ? signOut : (metadata.password ? passwordLogout : undefined)
+
   return (
     <div className="min-h-screen bg-background-dark">
-      <Navbar client={metadata} onLogout={metadata.password ? logout : undefined} />
+      <Navbar client={metadata} onLogout={handleLogout} />
       <Dashboard client={metadata} />
       <Footer />
       <ChatPanel clientSlug={clientSlug ?? ''} clientName={metadata.clientName} />

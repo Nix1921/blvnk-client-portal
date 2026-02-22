@@ -5,6 +5,8 @@ export interface ClientMetadata {
   packagePrice: string
   dateCompleted: string
   password?: string
+  authMethod?: 'password' | 'supabase'
+  allowedEmails?: string[]
   deliverables: DeliverableMetadata[]
 }
 

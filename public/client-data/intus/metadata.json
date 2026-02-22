@@ -167,6 +167,16 @@
       "estimatedReadTime": 5
     },
     {
+      "id": "19-vedic-brand-blueprint",
+      "type": "department",
+      "title": "Vedic Brand Blueprint — Intus",
+      "departmentNumber": 8,
+      "dateGenerated": "2026-02-22",
+      "status": "completed",
+      "order": 19,
+      "estimatedReadTime": 20
+    },
+    {
       "id": "gate-tracker",
       "type": "quality-gate",
       "title": "Intus Launch Kit — Gate Tracker",

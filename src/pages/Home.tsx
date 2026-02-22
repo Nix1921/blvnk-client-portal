@@ -22,7 +22,7 @@ export function Home() {
 
         <p className="text-text-muted text-xs mt-6">
           Don't have a link?{' '}
-          <a href="mailto:hello@blvnk.com" className="text-primary hover:underline">
+          <a href="mailto:hello@blvnk.space" className="text-primary hover:underline">
             Contact us
           </a>
         </p>

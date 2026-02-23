@@ -24,7 +24,7 @@ export function DeliverableCard({
       <div className="flex items-start justify-between mb-3">
         <span className={`px-2 py-0.5 rounded text-xs font-medium ${style.bg} ${style.color} border ${style.border}`}>
           {deliverable.type === 'department' && deliverable.departmentNumber
-            ? `Dept ${deliverable.departmentNumber}`
+            ? `DELV ${deliverable.departmentNumber}`
             : deliverable.type === 'quality-gate' && deliverable.gateNumber
               ? `Gate ${deliverable.gateNumber}`
               : style.label}

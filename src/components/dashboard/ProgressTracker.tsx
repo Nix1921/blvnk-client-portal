@@ -2,6 +2,7 @@ import type { DeliverableMetadata } from '../../data/types.ts'
 
 export function ProgressTracker({ deliverables }: { deliverables: DeliverableMetadata[] }) {
   const departments = deliverables.filter(d => d.type === 'department')
+  const supplements = deliverables.filter(d => d.type === 'supplement')
   const gates = deliverables.filter(d => d.type === 'quality-gate')
   const finals = deliverables.filter(d => d.type === 'final-summary')
 
@@ -24,8 +25,11 @@ export function ProgressTracker({ deliverables }: { deliverables: DeliverableMet
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4 text-center">
+      <div className={`grid gap-4 text-center ${supplements.length > 0 ? 'grid-cols-4' : 'grid-cols-3'}`}>
         <Stat label="Deliverables" count={departments.length} completed={departments.filter(d => d.status === 'completed').length} />
+        {supplements.length > 0 && (
+          <Stat label="Supplements" count={supplements.length} completed={supplements.filter(d => d.status === 'completed').length} />
+        )}
         <Stat label="Quality Gates" count={gates.length} completed={gates.filter(d => d.status === 'completed').length} />
         <Stat label="Executive Summary" count={finals.length} completed={finals.filter(d => d.status === 'completed').length} />
       </div>

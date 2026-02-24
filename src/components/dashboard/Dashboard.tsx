@@ -13,6 +13,7 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
   const gates = client.deliverables.filter(d => d.type === 'quality-gate')
   const finals = client.deliverables.filter(d => d.type === 'final-summary')
   const vedic = client.deliverables.filter(d => d.type === 'vedic')
+  const supplements = client.deliverables.filter(d => d.type === 'supplement')
 
   return (
     <div className="pt-16 min-h-screen">
@@ -52,6 +53,17 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
           <Section title="Vedic Intelligence & Cosmic Strategy">
             <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
               {vedic.map(d => (
+                <DeliverableCard key={d.id} deliverable={d} clientSlug={client.clientId} />
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* Ecommerce Supplements */}
+        {supplements.length > 0 && (
+          <Section title="Ecommerce Supplements">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {supplements.map(d => (
                 <DeliverableCard key={d.id} deliverable={d} clientSlug={client.clientId} />
               ))}
             </div>

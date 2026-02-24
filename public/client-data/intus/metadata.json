@@ -175,6 +175,51 @@
       "estimatedReadTime": 20
     },
     {
+      "id": "s01-cro-playbook",
+      "type": "supplement",
+      "title": "CRO Playbook — Intus Ecommerce Supplement",
+      "dateGenerated": "2026-02-24",
+      "status": "completed",
+      "order": 20,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "s02-sms-advanced-flows",
+      "type": "supplement",
+      "title": "SMS & Advanced Retention Flows — Intus Ecommerce Supplement",
+      "dateGenerated": "2026-02-24",
+      "status": "completed",
+      "order": 21,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "s03-channel-benchmarks",
+      "type": "supplement",
+      "title": "Channel Benchmarks & Paid Acquisition Playbook — Intus Ecommerce Supplement",
+      "dateGenerated": "2026-02-24",
+      "status": "completed",
+      "order": 22,
+      "estimatedReadTime": 10
+    },
+    {
+      "id": "s04-fulfilment-operations",
+      "type": "supplement",
+      "title": "Fulfilment & Operations Playbook — Intus Ecommerce Supplement",
+      "dateGenerated": "2026-02-24",
+      "status": "completed",
+      "order": 23,
+      "estimatedReadTime": 11
+    },
+    {
+      "id": "s05-attribution-deep-dive",
+      "type": "supplement",
+      "title": "Attribution & Analytics Deep Dive — Intus Ecommerce Supplement",
+      "dateGenerated": "2026-02-24",
+      "status": "completed",
+      "order": 24,
+      "estimatedReadTime": 12
+    },
+    {
       "id": "gate-tracker",
       "type": "quality-gate",
       "title": "Intus Launch Kit — Gate Tracker",

@@ -6,6 +6,7 @@ const typeStyles = {
   'quality-gate': { label: 'Quality Gate', color: 'text-warning', bg: 'bg-warning/10', border: 'border-warning/20' },
   'final-summary': { label: 'Final Summary', color: 'text-success', bg: 'bg-success/10', border: 'border-success/20' },
   'vedic': { label: 'Vedic Intelligence', color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20' },
+  'supplement': { label: 'Ecommerce Supplement', color: 'text-emerald-400', bg: 'bg-emerald-400/10', border: 'border-emerald-400/20' },
 }
 
 export function DeliverableCard({

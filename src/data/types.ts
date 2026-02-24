@@ -12,7 +12,7 @@ export interface ClientMetadata {
 
 export interface DeliverableMetadata {
   id: string
-  type: 'department' | 'quality-gate' | 'final-summary' | 'vedic'
+  type: 'department' | 'quality-gate' | 'final-summary' | 'vedic' | 'supplement'
   title: string
   departmentNumber?: number
   gateNumber?: number

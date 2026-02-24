@@ -5,12 +5,16 @@ const typeIcons = {
   department: '\u25CB',
   'quality-gate': '\u25C7',
   'final-summary': '\u2605',
+  'vedic': '\u2609',
+  'supplement': '\u25A0',
 }
 
 const typeLabels = {
   department: 'Department',
   'quality-gate': 'Quality Gate',
   'final-summary': 'Final Summary',
+  'vedic': 'Vedic Intelligence',
+  'supplement': 'Ecommerce Supplement',
 }
 
 export function Sidebar({
@@ -27,6 +31,8 @@ export function Sidebar({
   const { deliverableId } = useParams()
 
   const departments = deliverables.filter(d => d.type === 'department')
+  const vedic = deliverables.filter(d => d.type === 'vedic')
+  const supplements = deliverables.filter(d => d.type === 'supplement')
   const gates = deliverables.filter(d => d.type === 'quality-gate')
   const finals = deliverables.filter(d => d.type === 'final-summary')
 
@@ -43,6 +49,8 @@ export function Sidebar({
       >
         <div className="p-4 space-y-6">
           <SidebarSection title="Department Reports" items={departments} clientSlug={clientSlug} activeId={deliverableId} icon={typeIcons.department} />
+          <SidebarSection title="Vedic Intelligence" items={vedic} clientSlug={clientSlug} activeId={deliverableId} icon={typeIcons.vedic} />
+          <SidebarSection title="Ecommerce Supplements" items={supplements} clientSlug={clientSlug} activeId={deliverableId} icon={typeIcons.supplement} />
           <SidebarSection title="Quality Gates" items={gates} clientSlug={clientSlug} activeId={deliverableId} icon={typeIcons['quality-gate']} />
           <SidebarSection title="Final Summary" items={finals} clientSlug={clientSlug} activeId={deliverableId} icon={typeIcons['final-summary']} />
         </div>

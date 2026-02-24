@@ -2,7 +2,7 @@ export interface ClientMetadata {
   clientId: string
   clientName: string
   packageType: 'brand-sprint' | 'market-recon' | 'launch-kit'
-  packagePrice: string
+  packagePrice?: string
   dateCompleted: string
   password?: string
   authMethod?: 'password' | 'supabase'
@@ -12,7 +12,7 @@ export interface ClientMetadata {
 
 export interface DeliverableMetadata {
   id: string
-  type: 'department' | 'quality-gate' | 'final-summary'
+  type: 'department' | 'quality-gate' | 'final-summary' | 'vedic'
   title: string
   departmentNumber?: number
   gateNumber?: number

@@ -5,6 +5,7 @@ const typeStyles = {
   department: { label: 'Department', color: 'text-primary', bg: 'bg-primary/10', border: 'border-primary/20' },
   'quality-gate': { label: 'Quality Gate', color: 'text-warning', bg: 'bg-warning/10', border: 'border-warning/20' },
   'final-summary': { label: 'Final Summary', color: 'text-success', bg: 'bg-success/10', border: 'border-success/20' },
+  'vedic': { label: 'Vedic Intelligence', color: 'text-purple-400', bg: 'bg-purple-400/10', border: 'border-purple-400/20' },
 }
 
 export function DeliverableCard({
@@ -24,7 +25,7 @@ export function DeliverableCard({
       <div className="flex items-start justify-between mb-3">
         <span className={`px-2 py-0.5 rounded text-xs font-medium ${style.bg} ${style.color} border ${style.border}`}>
           {deliverable.type === 'department' && deliverable.departmentNumber
-            ? `DELV ${deliverable.departmentNumber}`
+            ? `Deliverable ${deliverable.departmentNumber}`
             : deliverable.type === 'quality-gate' && deliverable.gateNumber
               ? `Gate ${deliverable.gateNumber}`
               : style.label}

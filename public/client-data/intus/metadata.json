@@ -2,7 +2,6 @@
   "clientId": "intus",
   "clientName": "Intus",
   "packageType": "launch-kit",
-  "packagePrice": "$12,000",
   "dateCompleted": "2026-02-17",
   "password": "intus2026",
   "deliverables": [
@@ -168,9 +167,8 @@
     },
     {
       "id": "19-vedic-brand-blueprint",
-      "type": "department",
+      "type": "vedic",
       "title": "Vedic Brand Blueprint — Intus",
-      "departmentNumber": 8,
       "dateGenerated": "2026-02-22",
       "status": "completed",
       "order": 19,

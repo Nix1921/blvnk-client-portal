@@ -12,6 +12,7 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
   const departments = client.deliverables.filter(d => d.type === 'department')
   const gates = client.deliverables.filter(d => d.type === 'quality-gate')
   const finals = client.deliverables.filter(d => d.type === 'final-summary')
+  const vedic = client.deliverables.filter(d => d.type === 'vedic')
 
   return (
     <div className="pt-16 min-h-screen">
@@ -19,7 +20,7 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
         {/* Hero */}
         <div className="mb-12">
           <p className="text-primary text-sm font-medium mb-2">
-            {packageLabels[client.packageType]} &mdash; {client.packagePrice}
+            {packageLabels[client.packageType]}
           </p>
           <h1 className="text-4xl font-bold text-white mb-3">
             Your Deliverables
@@ -40,6 +41,17 @@ export function Dashboard({ client }: { client: ClientMetadata }) {
           <Section title="Deliverables">
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {departments.map(d => (
+                <DeliverableCard key={d.id} deliverable={d} clientSlug={client.clientId} />
+              ))}
+            </div>
+          </Section>
+        )}
+
+        {/* Vedic Intelligence */}
+        {vedic.length > 0 && (
+          <Section title="Vedic Intelligence & Cosmic Strategy">
+            <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2">
+              {vedic.map(d => (
                 <DeliverableCard key={d.id} deliverable={d} clientSlug={client.clientId} />
               ))}
             </div>

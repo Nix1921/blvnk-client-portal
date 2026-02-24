@@ -36,6 +36,25 @@ const SOURCE_KEYWORDS: Record<string, { id: string; title: string }> = {
   'measurement framework': { id: '15-measurement-framework', title: 'Measurement Framework & Dashboards' },
   'ninety-day roadmap': { id: '16-ninety-day-roadmap', title: '90-Day Post-Launch Roadmap' },
   '90-day': { id: '16-ninety-day-roadmap', title: '90-Day Post-Launch Roadmap' },
+  'vedic': { id: '19-vedic-brand-blueprint', title: 'Vedic Brand Blueprint' },
+  'vedic brand': { id: '19-vedic-brand-blueprint', title: 'Vedic Brand Blueprint' },
+  'nakshatra': { id: '19-vedic-brand-blueprint', title: 'Vedic Brand Blueprint' },
+  'cro': { id: 's01-cro-playbook', title: 'CRO Playbook' },
+  'conversion rate': { id: 's01-cro-playbook', title: 'CRO Playbook' },
+  'checkout optimization': { id: 's01-cro-playbook', title: 'CRO Playbook' },
+  'sms': { id: 's02-sms-advanced-flows', title: 'SMS & Advanced Retention Flows' },
+  'retention flow': { id: 's02-sms-advanced-flows', title: 'SMS & Advanced Retention Flows' },
+  'channel benchmark': { id: 's03-channel-benchmarks', title: 'Channel Benchmarks & Paid Acquisition Playbook' },
+  'cac': { id: 's03-channel-benchmarks', title: 'Channel Benchmarks & Paid Acquisition Playbook' },
+  'roas': { id: 's03-channel-benchmarks', title: 'Channel Benchmarks & Paid Acquisition Playbook' },
+  'fulfilment': { id: 's04-fulfilment-operations', title: 'Fulfilment & Operations Playbook' },
+  'fulfillment': { id: 's04-fulfilment-operations', title: 'Fulfilment & Operations Playbook' },
+  '3pl': { id: 's04-fulfilment-operations', title: 'Fulfilment & Operations Playbook' },
+  'shipping': { id: 's04-fulfilment-operations', title: 'Fulfilment & Operations Playbook' },
+  'returns': { id: 's04-fulfilment-operations', title: 'Fulfilment & Operations Playbook' },
+  'attribution': { id: 's05-attribution-deep-dive', title: 'Attribution & Analytics Deep Dive' },
+  'server-side tracking': { id: 's05-attribution-deep-dive', title: 'Attribution & Analytics Deep Dive' },
+  'incrementality': { id: 's05-attribution-deep-dive', title: 'Attribution & Analytics Deep Dive' },
 }
 
 function extractSources(answer: string): ChatSource[] {
@@ -75,28 +94,6 @@ function searchDeliverables(
     .map(s => s.d)
 }
 
-// Deliverable file names (matches public/client-data/{slug}/deliverables/)
-const DELIVERABLE_FILES = [
-  'executive-summary',
-  'gate-tracker',
-  '01-market-intelligence-report',
-  '02-competitive-dynamics-report',
-  '03-strategic-positioning-brief',
-  '04-brand-archetype-guide',
-  '05-brandscript-and-manifesto',
-  '06-tone-of-voice-guide',
-  '07-brand-identity-system',
-  '08-design-system',
-  '09-semiotic-dictionary',
-  '10-website-ux-wireframes',
-  '11-content-strategy-channel-plan',
-  '12-email-lifecycle-system',
-  '13-ad-creative-testing-framework',
-  '14-lightning-strike-execution-plan',
-  '15-measurement-framework',
-  '16-ninety-day-roadmap',
-]
-
 export function useChat(clientSlug: string): UseChatResult {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -107,10 +104,22 @@ export function useChat(clientSlug: string): UseChatResult {
   const loadDeliverables = useCallback(async (): Promise<DeliverableJSON[]> => {
     if (deliverablesCache.current) return deliverablesCache.current
 
+    // Dynamically load deliverable IDs from metadata.json
+    let deliverableIds: string[] = []
+    try {
+      const metaRes = await fetch(`/client-data/${clientSlug}/metadata.json`)
+      if (metaRes.ok) {
+        const metadata = await metaRes.json()
+        deliverableIds = metadata.deliverables.map((d: { id: string }) => d.id)
+      }
+    } catch {
+      // Fallback: no deliverables available
+    }
+
     const results: DeliverableJSON[] = []
-    for (const file of DELIVERABLE_FILES) {
+    for (const id of deliverableIds) {
       try {
-        const res = await fetch(`/client-data/${clientSlug}/deliverables/${file}.json`)
+        const res = await fetch(`/client-data/${clientSlug}/deliverables/${id}.json`)
         if (res.ok) {
           const data = await res.json()
           results.push(data)
